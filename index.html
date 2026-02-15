@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanaa ❤️ Himanshu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    body {
+      background: linear-gradient(135deg, #fff1f5, #f0f9ff);
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    /* Floating hearts background */
+    .heart {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      background: #ff4d6d;
+      transform: rotate(45deg);
+      opacity: 0.2;
+      animation: floatUp 10s linear infinite;
+      z-index: 0;
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #ff4d6d;
+      border-radius: 50%;
+    }
+    .heart::before { top: -7px; left: 0; }
+    .heart::after { left: -7px; top: 0; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(45deg); }
+      100% { transform: translateY(-120vh) rotate(45deg); }
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 18px 30px;
+      position: relative;
+      z-index: 2;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ff2d55;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.05rem;
+      opacity: 0.85;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 950px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      padding-bottom: 60px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.88);
+      border-radius: 22px;
+      padding: 18px;
+      margin: 18px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+    }
+    .card:hover { transform: translateY(-3px); }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .desc {
+      font-size: 1rem;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    .photo {
+      width: 100%;
+      height: auto;
+      display: block;
+      border radius: 18px;
+      margin-top: 12px;
+      object-fit: contain;
+      
+    }
+
+    /* Music Player */
+    .music-box {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+      backdrop-filter: blur(10px);
+    }
+    .music-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .music-left strong {
+      color: #ff2d55;
+      font-size: 0.98rem;
+    }
+    .music-left span {
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      background: #ff2d55;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+    button:hover { opacity: 0.9; }
+    input[type="range"] {
+      width: 120px;
+      cursor: pointer;
+    }
+
+    /* Questions section */
+    .question {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,45,85,0.06);
+      border: 1px solid rgba(255,45,85,0.12);
+    }
+    .question p {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ff2d55;
+    }
+    .answers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .ans {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+    .ans:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,45,85,0.4);
+    }
+
+    /* Surprise button */
+    .surpriseBtn {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 18px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      background: linear-gradient(135deg, #ff2d55, #ff6b8a);
+      box-shadow: 0 12px 30px rgba(255,45,85,0.22);
+    }
+
+    /* Modal */
+    .modalOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 999;
+    }
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .modal h2 {
+      color: #ff2d55;
+      margin-bottom: 8px;
+      font-size: 1.6rem;
+    }
+    .modal p {
+      opacity: 0.85;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+    .btnRow {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .yesBtn {
+      min-width: 210px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff2d55, #ff6b8a);
+    }
+    .noBtn {
+      min-width: 210px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-weight: 800;
+      background: rgba(0,0,0,0.06);
+      color: #111;
+      border: 1px solid rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .closeX {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0,0,0,0.06);
+      color: #111;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 800;
+    }
+
+    .finalMsg {
+      margin-top: 12px;
+      font-weight: 800;
+      color: #ff2d55;
+      min-height: 26px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 12px 40px;
+      opacity: 0.85;
+      position: relative;
+      z-index: 2;
+    }
+    footer h2 {
+      font-size: 1.6rem;
+      color: #ff2d55;
+      margin-bottom: 8px;
+    }
+    footer p {
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.8rem; }
+      input[type="range"] { width: 90px; }
+      .yesBtn, .noBtn { min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating hearts -->
+  <script>
+    for (let i = 0; i < 18; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (7 + Math.random() * 8) + "s";
+      heart.style.opacity = (0.12 + Math.random() * 0.2);
+      heart.style.transform = "rotate(45deg) scale(" + (0.6 + Math.random()) + ")";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <header>
+    <h1>Sanaa ❤️ Himanshu</h1>
+    <p>
+      This is not a normal website.  
+      This is basically my way of saying — <b>I like you… a lot.</b>  
+      And I’m still shocked that it all started from <b>Mindspark</b>.
+      <br><br>
+      Also yes… Sanaa or should I say <b>ENTC ki NRI baddie</b> 😭💅 click the play button below to hear my       
+      feelings for you..
+    </p>
+  </header>
+
+  <div class="container">
+
+    <!-- Music player -->
+    <div class="music-box">
+      <div class="music-left">
+        <strong>🎶 Just The Way You Are</strong>
+        <span>Rom-com background music</span>
+      </div>
+
+      <div class="music-controls">
+        <button id="playBtn">Play</button>
+        <input id="volume" type="range" min="0" max="1" step="0.01" value="0.55" />
+      </div>
+    </div>
+
+    <audio id="song" loop>
+      <source src="song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Intro card -->
+    <div class="card">
+      <div class="title">✨ The Plot Twist</div>
+      <div class="desc">
+        I thought Mindspark was just a college fest.  
+        But apparently it was also the place where I met <b>my favourite person</b>.
+        <br><br>
+        And yes… the famous <b>ENTC ki NRI baddie</b>.  
+        (And I’m still not over it.)
+      </div>
+    </div>
+
+    <!-- Photo 1 -->
+    <div class="card">
+      <div class="title">1) Your “Random Funny” Era 😭</div>
+      <div class="desc">
+        This photo is proof that you can look cute even while being completely unserious.
+        <br>
+        (Also why are you always naturally funny?? unfair.)
+      </div>
+      <img class="photo" src="photo1.jpg" alt="Sanaa funny photo" />
+    </div>
+
+    <!-- Photo 2 -->
+    <div class="card">
+      <div class="title">2) Tekdi Days 🥹</div>
+      <div class="desc">
+        Tekdi is always so funn…  
+        but honestly, the best part was always <b>you</b>.
+        <br><br>
+        The laughs, the teasing, the vibe…  
+        it felt like a scene from a rom-com.
+      </div>
+      <img class="photo" src="photo2.jpg" alt="Tekdi trek memory" />
+    </div>
+
+    <!-- Photo 3 -->
+    <div class="card">
+      <div class="title">3) Traditional Day = Main Character Energy 😭❤️</div>
+      <div class="desc">
+        i feel this is the cutest photo I took of you.
+        <br>
+        You looked so beautiful that day I genuinely forgot how to act normal.
+        <br><br>
+        Like… hello??? who allowed you to look THIS pretty??
+      </div>
+      <img class="photo" src="photo3.jpg" alt="Traditional day photo" />
+    </div>
+
+    <!-- Moments -->
+    <div class="card">
+      <div class="title">💌 Our Favourite Moments</div>
+      <div class="desc">
+        Here are some moments that live in my head rent-free:
+      </div>
+
+      <div class="question">
+        <p>🎤 Concert Hug</p>
+        <div class="desc">
+          That hug was not just “friendly” for me.  
+          That’s when I knew… I’m cooked.
+        </div>
+      </div>
+
+      <div class="question">
+        <p> Random unoff mini-dates</p>
+        <div class="desc">
+        The place or the plan doesn't actually matter to me..<b>As long as I'm with you <3 </b>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>🫠 First time I realised I like you</p>
+        <div class="desc">
+          It wasn’t one big moment.
+          <br>
+          It was a hundred small ones…  
+          and suddenly you became my favourite habit.
+        </div>
+      </div>
+    </div>
+
+    <!-- Cute interactive question -->
+    <div class="card">
+      <div class="title">Okay Sanaa… important question 😌</div>
+      <div class="desc">
+        If this was a rom-com, what would our movie be called?
+      </div>
+
+      <div class="question">
+        <p>Choose one 👇</p>
+        <div class="answers">
+          <div class="ans" onclick="reply('Correct answer. Also I love you.')">“Tekdi & Chill”</div>
+          <div class="ans" onclick="reply('Im not surprised tho, they are correct.😭❤️')">“ENTC ki NRI Baddie”</div>
+          <div class="ans" onclick="reply('The hug scene deserved an Oscar.')">“The Concert Hug”</div>
+          <div class="ans" onclick="reply('Bro I’d watch this 10 times.')">“Mindspark: The Beginning”</div>
+        </div>
+      </div>
+
+      <div id="replyBox" class="desc" style="margin-top:12px; font-weight:700; color:#ff2d55;"></div>
+    </div>
+
+    <!-- Surprise ending -->
+    <div class="card">
+      <div class="title">🎁 One last thing…</div>
+      <div class="desc">
+        You’ve reached the end.
+        <br>
+        But the main scene is still left 😭❤️
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="surpriseBtn" onclick="openSurprise()">Click for the surprise 💝</button>
+      </div>
+
+      <div class="desc" style="margin-top:10px; opacity:0.75;">
+        (Warning: extremely romantic. Proceed at your own risk.)
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <h2>Happy Valentine’s Day, Sanaa ❤️</h2>
+    <p>
+      I know we joke around a lot and keep things chill…  
+      but I just want you to know —
+      <br><br>
+      <b>You’re special to me.</b>
+      <br>
+      And I like you veryyyyyy much!!
+      <br><br>
+      — Himanshu 💌
+    </p>
+  </footer>
+
+  <!-- Surprise Modal -->
+  <div class="modalOverlay" id="modalOverlay">
+    <div class="modal">
+      <button class="closeX" onclick="closeSurprise()">✕</button>
+
+      <h2>Sanaa… listen 🥺❤️</h2>
+      <p>
+        You’re not just a memory or a vibe or a moment.
+        <br><br>
+        You’re my favourite person.
+        My comfort.
+        My biggest smile.
+        <br><br>
+        And I know I joke a lot…  
+        but right now I’m being serious.
+      </p>
+
+      <h2 style="margin-top:6px;">Will you be my Valentine? 😭💌</h2>
+
+      <div class="btnRow">
+        <button class="yesBtn" onclick="yesClicked()">YES ❤️</button>
+        <button class="noBtn" id="noBtn">No 😔</button>
+      </div>
+
+      <div class="finalMsg" id="finalMsg"></div>
+    </div>
+  </div>
+
+  <script>
+    // Music logic
+    const song = document.getElementById("song");
+    const playBtn = document.getElementById("playBtn");
+    const volumeSlider = document.getElementById("volume");
+
+    song.volume = volumeSlider.value;
+
+    playBtn.addEventListener("click", async () => {
+      try {
+        if (song.paused) {
+          await song.play();
+          playBtn.textContent = "Pause";
+        } else {
+          song.pause();
+          playBtn.textContent = "Play";
+        }
+      } catch (e) {
+        alert("Tap Play once again 😭 (mobile browsers are dramatic)");
+      }
+    });
+
+    volumeSlider.addEventListener("input", () => {
+      song.volume = volumeSlider.value;
+    });
+
+    // Cute reply function
+    function reply(text) {
+      document.getElementById("replyBox").textContent = text;
+    }
+
+    // Surprise modal
+    const modalOverlay = document.getElementById("modalOverlay");
+    function openSurprise(){
+      modalOverlay.style.display = "flex";
+      // keep music running, just open overlay
+    }
+    function closeSurprise(){
+      modalOverlay.style.display = "none";
+    }
+
+    // No button runs away 😭
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseenter", ()=>{
+      const x = Math.random() * 240 - 120;
+      const y = Math.random() * 140 - 70;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Hearts burst
+    function burstHearts(){
+      for(let i=0;i<18;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.style.left = (45 + Math.random()*10) + "vw";
+        h.style.animationDuration = (3 + Math.random()*3) + "s";
+        h.style.opacity = (0.25 + Math.random()*0.25);
+        h.style.transform = "rotate(45deg) scale(" + (0.6 + Math.random()) + ")";
+        document.body.appendChild(h);
+        setTimeout(()=> h.remove(), 7000);
+      }
+    }
+
+    function yesClicked(){
+      const msg = document.getElementById("finalMsg");
+      msg.textContent = "YAY 😭❤️ Okay now you’re officially my Valentine. Come here. *virtual hug*";
+      burstHearts();
+      setTimeout(()=> alert("Sanaa ❤️ Himanshu\n\nHappy Valentine’s Day 😭💌"), 300);
+    }
+  </script>
+
+</body>
+</html>
